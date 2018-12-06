@@ -132,6 +132,9 @@ public class HuffProcessor {
 				break;
 			}
 			String c = codings[code];
+			if(myDebugLevel >= DEBUG_HIGH) {
+				System.out.printf("Huffman encoding is %s \n", c);
+			}
 			out.writeBits(c.length(),  Integer.parseInt(c, 2));
 		}
 	}
