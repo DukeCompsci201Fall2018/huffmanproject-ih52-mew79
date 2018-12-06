@@ -62,6 +62,7 @@ public class HuffProcessor {
 			if(bits == -1) {
 				break;
 			}
+			freqArray[PSEUDO_EOF] = 1;
 			if(bits == PSEUDO_EOF) {
 				freqArray[PSEUDO_EOF] = 1;
 			}
