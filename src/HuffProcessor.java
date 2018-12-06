@@ -52,6 +52,8 @@ public class HuffProcessor {
 		
 		in.reset();
 		writeCompressedBits(codings, in, out);
+		String code = codings[PSEUDO_EOF];
+		out.writeBits(code.length(), Integer.parseInt(code, 2));
 		out.close();
 	}
 	
@@ -115,7 +117,7 @@ public class HuffProcessor {
 			writeHeader(left, out);
 			writeHeader(right, out);
 		}
-		else {
+		if(root.myLeft == null && root.myRight == null) {
 			out.writeBits(1,  1);
 			out.writeBits(BITS_PER_WORD+1, root.myValue);
 		}
@@ -124,10 +126,6 @@ public class HuffProcessor {
 	private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
 		while(true) {
 			int code = in.readBits(BITS_PER_WORD);
-			if(code == PSEUDO_EOF) {
-				String placeholder = codings[code];
-				out.writeBits(placeholder.length(), Integer.parseInt(placeholder, 2));
-			}
 			if(code == -1) {
 				break;
 			}
